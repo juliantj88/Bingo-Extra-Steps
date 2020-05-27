@@ -80,14 +80,14 @@ int main(int argc, char** argv){
 }
 
 void printHelp(){
-    std::cout << "\n" << HELPSECTIONUP <<
-    "\nWelcome! Azul is a simple and fun board game where \n" <<
-    "you'd need take coloured tiles form given factory \n" <<
-    "into your own board. Winner is the first to complete \n" <<
-    "a single line in their mosaic horizontally! \n" <<
-    "You can input 'help' in-game to ask for help \n" <<
-    "Press 1 to start a new game. \n" <<
-    HELPSECTIONDOWN <<
+    std::cout << "\n" << LIGHTBLUE << HELPSECTIONUP <<  
+    "\n Welcome! Azul is a simple yet fun board game where \n" <<
+    " you'd need take coloured tiles form given factory \n" <<
+    " into your own board. Winner is the first to complete \n" <<
+    " a single line in their mosaic horizontally! \n" <<
+    " You can input 'help' in-game to ask for help \n" <<
+    " Press 1 to start a new game. \n" <<
+     HELPSECTIONDOWN << RESET <<
     std::endl;
 }
 void printMenu(){
