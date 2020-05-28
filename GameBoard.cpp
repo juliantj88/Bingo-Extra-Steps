@@ -303,6 +303,21 @@ bool GameBoard::factoriesEmpty(){
     }
 }
 
+bool GameBoard::factoriesEmpty2(){
+    int counter=0;
+    for(int i=1; i<ALL_FACTORES; i++){
+        if(factoryEmpty(i)==true){
+            counter++;
+        }
+    }
+    if(counter==NUM_FACTORIES){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+
 int GameBoard::takeTile(int factoryNumber, char tile){
     int check = 0;
     int storeSize = 0;

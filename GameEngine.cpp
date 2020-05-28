@@ -208,11 +208,18 @@ bool GameEngine::processInput(std::string input, GameBoard* gameBoard, Player* p
             check=false;
         } 
     }
+    else if(input=="help"){
+        processHelp(gameBoard, player);
+        check=false;
+    }
     else{
         check=false;
     }
-    if(check==false){
+    if(check==false && input!="help"){
         std::cout << "Invalid Input" << std::endl;
+        return false;
+    }
+    else if(input=="help"){
         return false;
     }
     else{
@@ -220,15 +227,51 @@ bool GameEngine::processInput(std::string input, GameBoard* gameBoard, Player* p
     }
 }
 
-void GameEngine::help1(){
-    std::cout << HELPBLOCK <<
-    "Choose a tile from factory (E.g. Factory 1) and then \n" <<
-    "select a tile colour (E.g. Yellow/Y), and finally \n" <<
-    "select a line in your board to put the tiles into. \n" <<
-    "Your final input must be like this: \n" <<
-    ">take 1 Y 1 \n" <<
-    "Goodluck! \n\n";
+void GameEngine::processHelp(GameBoard* gameBoard, Player* player){
+    if(gameBoard->factoriesEmpty2()){
+        if(gameBoard->checkCentre()){
+            help2();
+        }
+        else{
+            help3();
+        }
+    }
+    else if(!gameBoard->checkCentre()){
+        help4();
+    }
+    else{
+        help1();
+    }
 }
+
+void GameEngine::help1(){
+    std::cout << "\n" << RED << HELPBLOCK <<
+    "\n Choose a factory number (e.g. 1), a tile colour (e.g Y) \n" <<
+    " Select a line in your mozaic (e.g. 1) \n" <<
+    " Your final input must be like: >turn 1 Y 1 \n" <<
+    " [Warning: Drawing from centre factory now will get you \n" <<
+    " the first player marker] \n\n" << RESET;
+}
+
+void GameEngine::help2(){
+    std::cout << "\n" << RED << HELPBLOCK <<
+    "\n You'll have to draw from the centre factory now! \n" <<
+    " The first player marker (F) will go into your broken \n" <<
+    " tiles.  \n\n" << RESET;
+}
+
+void GameEngine::help3(){
+    std::cout << "\n" << RED << HELPBLOCK <<
+    "\n You'll have to draw from the centre factory now! \n\n" << RESET;
+}
+
+void GameEngine::help4(){
+    std::cout << "\n" << RED << HELPBLOCK <<
+    "\n Choose a factory number (e.g. 1), a tile colour (e.g Y) \n" <<
+    " Select a line in your mozaic (e.g. 1) \n" <<
+    " Your final input must be like: >turn 1 Y 1 \n" << RESET;
+}
+
 
 bool GameEngine::checkInput(std::string input, GameBoard* gameBoard, Player* player){
     //check if input string is valid (1-5, RYBLUF, and 1-5)

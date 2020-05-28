@@ -25,8 +25,20 @@ class GameEngine{
     //creates player to store into game engine
     void createPlayers(std::string playerName1, std::string playerName2);
 
+    //choose a correct help message given a game state
+    void processHelp(GameBoard* gameBoard, Player* player);
+
     //help message 1
     void help1();
+
+    //help message 2
+    void help2();
+
+    //help message 3
+    void help3();
+
+    //help message 4
+    void help4();
 
     //Returns a winner
     Player* getWinner();

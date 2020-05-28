@@ -36,6 +36,9 @@ class GameBoard{
     //checks if factories are empty
     bool factoriesEmpty();
 
+    //checks if factories except centre are empty
+    bool factoriesEmpty2();
+
     //checks if given factory is empty
     bool factoryEmpty(int factoryNumber);
 
