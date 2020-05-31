@@ -199,6 +199,8 @@ void GameEngineAI::calculateMove(GameBoard* gameBoard, PlayerBoard* player2Board
                                 int numTiles = gameBoard->checkTile(j,tile);
                                 if(gameBoard->checkTile(j, tile) == player2Board->checkFreeSpace(i)){
 
+                                    bool message=false;
+
                                     if(j==0 && gameBoard->checkCentre()==true){
                                         
                                         bool FplayerCheck=false;
@@ -211,8 +213,12 @@ void GameEngineAI::calculateMove(GameBoard* gameBoard, PlayerBoard* player2Board
                                                 counter=true;
                             
                                                 FplayerCheck=true;
-                                                
-                                                std::cout << "\n" << j << " " << tile << " " << i+1 << std::endl;
+                                                if(message==false){
+                                                    std::cout << YELLOW << "\n Bot's move: " << 
+                                                    "\n  > turn " << j << " " << tile << " " << i+1 << std::endl;
+                                                    std::cout << RESET;
+                                                }
+                                                message=true;
                                             } 
                                         }
                                         if(FplayerCheck){
@@ -229,7 +235,12 @@ void GameEngineAI::calculateMove(GameBoard* gameBoard, PlayerBoard* player2Board
                                                 countstop=1;
                                                 gameBoard->takeTile(j, tile);
                                                 counter=true;
-                                                std::cout << "\n" << j << " " << tile << " " << i+1 << std::endl;
+                                                if(message==false){
+                                                    std::cout << YELLOW << "\n Bot's move: " << 
+                                                    "\n  > turn " << j << " " << tile << " " << i+1 << std::endl;
+                                                    std::cout << RESET;
+                                                }
+                                                message=true;
                                             } 
                                         }
                                     }
@@ -296,6 +307,9 @@ bool GameEngineAI::insertLine(GameBoard* gameBoard, PlayerBoard* player2Board, i
                     //Checks if tile exists in gameBoard
                     if(gameBoard->checkTile(i, tile)>-1){
                         int numTiles=gameBoard->checkTile(i,tile);
+
+                        bool message = false;
+
                         //If user is taking tiles from centre factory with F player marker
                         if(i==0 && gameBoard->checkCentre()==true){
 
@@ -307,7 +321,12 @@ bool GameEngineAI::insertLine(GameBoard* gameBoard, PlayerBoard* player2Board, i
                                     gameBoard->takeTile(i, tile);
                                     counter=true;       
                                     FplayerCheck=true;
-                                    std::cout << "\n" << i << " " << tile << " " << playerLine+1 << std::endl;
+                                    if(message==false){
+                                        std::cout << YELLOW << "\n Bot's move: " << 
+                                        "\n  > turn " << i << " " << tile << " " << playerLine+1 << std::endl;
+                                        std::cout << RESET;
+                                    }
+                                    message=true;
                                 }
                             }
                             if(FplayerCheck){
@@ -323,7 +342,14 @@ bool GameEngineAI::insertLine(GameBoard* gameBoard, PlayerBoard* player2Board, i
                                     countstop=1;
                                     gameBoard->takeTile(i, tile);
                                     counter=true;       
-                                    std::cout << "\n" << i << " " << tile << " " << playerLine+1 << std::endl;
+
+                                    //Print move:
+                                    if(message==false){
+                                        std::cout << YELLOW << "\n Bot's move: " << 
+                                        "\n  > turn " << i << " " << tile << " " << playerLine+1 << std::endl;
+                                        std::cout << RESET;
+                                    }
+                                    message=true;
                                 }
                             }
                         }
