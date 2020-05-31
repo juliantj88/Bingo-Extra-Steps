@@ -5,6 +5,7 @@
 #include "Player.h"
 #include "GameBoard.h"
 #include "GameEngine.h"
+#include "GameEngineAI.h"
 
 //for processing file input
 class Args{   
@@ -17,6 +18,7 @@ void printHelp();
 void printMenu();
 void showCredits();
 void azulGame(GameEngine* engine);
+void singlePlayer(GameEngineAI* engine);
 
 
 int main(int argc, char** argv){
@@ -25,9 +27,9 @@ int main(int argc, char** argv){
     
     std::cout << std::endl;
     std::cout << 
-    "\u2A1D \u2A1D \u2A1D \u2A1D \u2A1D \u2A1D \u2A1D \u2A1D \n" <<
-    "WELCOME TO \u1EB2ZUL\u00AE \n" <<
-    "\u2A1D \u2A1D \u2A1D \u2A1D \u2A1D \u2A1D \u2A1D \u2A1D \n"; 
+    MAINHEADER <<
+    "WELCOME TO " << AZUL <<
+    MAINHEADER; 
 
     for(int i = 0; i < argc; i++){
         if(std::string(argv[i]) == "-s"){
@@ -46,6 +48,7 @@ int main(int argc, char** argv){
     }
 
     GameEngine* engine = new GameEngine(randomSeed);
+    GameEngineAI* engine2 = new GameEngineAI(randomSeed);
     
     while (userInput != "4" ){
         printMenu();
@@ -56,15 +59,21 @@ int main(int argc, char** argv){
         if (userInput == "1") {
             azulGame(engine);
 
-        } else if (userInput == "2") {
+        } 
+        
+        else if(userInput == "2"){
+            singlePlayer(engine2);
+        }
+
+        else if (userInput == "3") {
             if(engine->loadGame()){
                 engine->playGame();
             }
 
-        } else if (userInput == "3") {
+        } else if (userInput == "4") {
             showCredits();
 
-        } else if (userInput == "4") {
+        } else if (userInput == "5") {
             std::cout<<"Thanks for playing"<<std::endl;
 
         } 
@@ -77,6 +86,19 @@ int main(int argc, char** argv){
         }
     }
     return EXIT_SUCCESS;
+}
+
+void singlePlayer(GameEngineAI* engine){
+    //std::cin.ignore(100000, '\n');
+    std::string playerName1;
+    std::cout << "Enter a name for Player I" << std::endl << ">";
+    std::getline(std::cin, playerName1);
+
+    std::cout << std::endl << "LET'S PLAY! \n\n" << std::endl << std::endl;
+
+    engine->createPlayers(playerName1);
+    //std::cin.ignore(100000, '\n');
+    engine->playGame();
 }
 
 void printHelp(){
@@ -94,10 +116,11 @@ void printMenu(){
     std::cout << 
     "\nMenu \n" <<
     "---- \n" <<
-    "1 \u29F3 New Game \n" <<
-    "2 \u29F3 Load Game \n" <<
-    "3 \u29F3 Credits (Show student information) \n" <<
-    "4 \u29F3 Quit \n \n";
+    "1 " << MENUDOT << " New Game \n" <<
+    "2 " << MENUDOT << " New Game (Single Player) \n" <<
+    "3 " << MENUDOT << " Load Game \n" <<
+    "4 " << MENUDOT << " Credits (Show student information) \n" <<
+    "5 " << MENUDOT << " Quit \n \n";
 }
 
 void azulGame(GameEngine* engine){

@@ -217,10 +217,65 @@ bool PlayerBoard::insertIntoLine(int mosaicLineNumber, LinkedList* boxLid, char 
     else{
         return false;
     }
-
 }
 
-            
+char PlayerBoard::tileInLine(int line){
+    char check='Z';
+    if(mosaicLines[line][0]!='.'){
+        check = mosaicLines[line][0];
+    }
+    return check;
+}
+
+bool PlayerBoard::checkMosaic(int line){
+    bool check=false;
+    for(int i=0;i<5;i++){
+        if(check==false){
+            if(factoryWall[line][i]=='R' || factoryWall[line][i]=='L' || factoryWall[line][i]=='Y' || factoryWall[line][i]=='B' ||factoryWall[line][i]=='U'){
+                check=true;
+            }
+        }
+    }
+    return check;
+}
+
+int PlayerBoard::checkFreeSpace(int line){
+    int check=0;
+    if(line==0){
+        if(mosaicLines[0][0]=='.'){
+            check=1;
+        }
+    }
+    else if(line==1){
+        for(int i=0;i<2;i++){
+            if(mosaicLines[1][i]=='.'){
+                check++;
+            }
+        }
+    }
+    else if(line==2){
+        for(int i=0;i<3;i++){
+            if(mosaicLines[2][i]=='.'){
+                check++;
+            }
+        }
+    }
+    else if(line==3){
+        for(int i=0;i<4;i++){
+            if(mosaicLines[3][i]=='.'){
+                check++;
+            }
+        }
+    }
+    else if(line==4){
+        for(int i=0;i<5;i++){
+            if(mosaicLines[4][i]=='.'){
+                check++;
+            }
+        }
+    }
+    return check;
+}
     
 
   //  void PlayerBoard::insertIntoLine(int factoryLineNumber, LinkedList* boxLid, std::list<char> discardTiles) {
@@ -348,7 +403,7 @@ void PlayerBoard::printWall(int x){
                     std::cout << RESET;
                 }
                 else{
-                    std::cout<<broken[i];
+                    std::cout<<" "<<broken[i];
                 } 
             }
             std::cout<<std::endl;

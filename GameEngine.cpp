@@ -168,15 +168,18 @@ bool GameEngine::processInput(std::string input, GameBoard* gameBoard, Player* p
         if(player->getPlayerBoard()->checkLine(line-1, tile)==true){
 
             //if the selected tile exists in the factory, remove same color tiles from factory
-            int numTiles = gameBoard->takeTile(factory, tile);
+            //int numTiles = gameBoard->takeTile(factory, tile);
+            int numTiles = gameBoard->checkTile(factory, tile);
             if(numTiles>0){
-                //If user is taking tiles from centre factory:
+                //If user is taking tiles from centre factory with F player marker
                 if(factory==0 && gameBoard->checkCentre()==true){
                     player->getPlayerBoard()->insertIntoLine(line-1, gameBoard->getBoxLid(), 'F');
                     for(int x=0;x<numTiles;x++){
                         if(player->getPlayerBoard()->insertIntoLine(line-1, gameBoard->getBoxLid(), tile)==true){
                             check=true;
                             
+                            gameBoard->takeTile(factory,tile);
+
                             gameBoard->takeFirstMarker();
                             player->setFirstPlayerMark(true);
                         }
@@ -186,11 +189,13 @@ bool GameEngine::processInput(std::string input, GameBoard* gameBoard, Player* p
                         }
                     }
                 }   
-                //If user isn't taking tiles from centre factory:
+                //If centre factory doesn't have an F
                 else{ 
                     for(int x=0;x<numTiles;x++){
                         if(player->getPlayerBoard()->insertIntoLine(line-1, gameBoard->getBoxLid(), tile)==true){
                             check=true;
+
+                            gameBoard->takeTile(factory,tile);
                         }
                         else{
                             check=false;

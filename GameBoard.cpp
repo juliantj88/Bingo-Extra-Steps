@@ -359,6 +359,25 @@ int GameBoard::takeTile(int factoryNumber, char tile){
     return check;
 }
 
+int GameBoard::checkTile(int factoryNumber, char tile){
+    int check=0;
+    if(factoryNumber==0){
+        for(int i=0; i<CENTRE_FACTORY; i++){
+            if(tile==retrieveFactory(factoryNumber)[i]){
+                check++;
+            }
+        }
+    }
+    else{
+        for(int i=0; i<FACTORY_SIZE; i++){
+            if(tile==retrieveFactory(factoryNumber)[i]){
+                check++;
+            }
+        }
+    }
+    return check;
+}
+
 void GameBoard::takeFirstMarker(){
     for(int i=0;i<CENTRE_FACTORY;i++){
         if(retrieveFactory(0)[i]=='F'){

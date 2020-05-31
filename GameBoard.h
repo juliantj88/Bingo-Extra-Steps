@@ -45,6 +45,9 @@ class GameBoard{
     //takes a tile from selected factory
     int takeTile(int factoryNumber, char tile);
 
+    //checks if given tile exists in factory, return the number of same coloured tiles
+    int checkTile(int factoryNumber, char tile);
+
     //adds something into centre factory
     void addIntoCentre(char tile);
 

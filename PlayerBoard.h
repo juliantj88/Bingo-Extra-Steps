@@ -30,6 +30,15 @@ class PlayerBoard{
     //checks if a line contains the given tile
     bool checkLine(int line, char tile);
 
+    //checks how much free space in a line
+    int checkFreeSpace(int line);
+
+    //return a char that exists in a line
+    char tileInLine(int line);
+
+    //check mosaic has an uppercase
+    bool checkMosaic(int line);
+
     //function to print current status of player board
     void printMosaic();
 

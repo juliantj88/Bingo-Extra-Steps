@@ -13,10 +13,10 @@ class GameEngine{
     ~GameEngine();
 
     //The gameplay method
-    void playGame();
+    virtual void playGame();
 
     //Returns the number of colors found in the factory
-    bool processInput(std::string input, GameBoard* gameBoard, Player* player);
+    virtual bool processInput(std::string input, GameBoard* gameBoard, Player* player);
     
     bool intoMozaic(std::string input, Player* player, int sameColorTiles);
 
@@ -66,7 +66,7 @@ class GameEngine{
 
 
 
-    private:
+    protected:
     GameBoard* gameBoard;
     Player* winner;
     LinkedList* tileBag;

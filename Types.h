@@ -33,9 +33,12 @@ typedef char* Empty;
 #define ORANGE      "\033[91m" 
 
 //unicode symbols
+#define MENUDOT "\u29F3"
 #define ARROW " \u25BA "
 #define DIAMOND " \u2588"
 #define DIAMOND2 "\u2666"
+#define AZUL "\u1EB2ZUL\u00AE \n"
+#define MAINHEADER "\u2A1D \u2A1D \u2A1D \u2A1D \u2A1D \u2A1D \u2A1D \u2A1D \n"
 #define HELPBLOCK "\u3016 HELP \u3017 "
 #define HEADER1 "\u2ABB \u2ABB \u2ABB \u2ABB \u2ABB  \u2ABC \u2ABC \u2ABC \u2ABC \u2ABC"
 #define PLAYERBLOCK "\u2585 \u2585\u2585\u2585\u2585\u2585\u2585\u2585\u2585\u2585\u2585\u2585\u2585\u2585\u2585\u2585\u2585\u2585\u2585\u2585\u2585\u2585\u2585\u2585"
