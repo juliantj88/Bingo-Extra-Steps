@@ -143,7 +143,8 @@ void printHelp(){
     " into your own board. Winner is the first to complete \n" <<
     " a single line in their mosaic horizontally! \n" <<
     " You can input 'help' in-game to ask for help \n" <<
-    " Press 1 to start a new game. \n" <<
+    " Press 1 to start a new 2-player game. \n" <<
+    " Or press 2 to play a new AI game. \n" <<
      HELPSECTIONDOWN << RESET <<
     std::endl;
 }
