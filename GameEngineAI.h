@@ -26,6 +26,9 @@ class GameEngineAI: public GameEngine{
         //checks if there're factory wall with completed tiles
         int check2(PlayerBoard* player2Board);
 
+        //checks for empty lines
+        int check3(PlayerBoard* player2Board, int playerLine);
+
         bool insertLine(GameBoard* gameBoard, PlayerBoard* player2Board, int playerLine, Player* player2);
 
 

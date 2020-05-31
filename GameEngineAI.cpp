@@ -141,46 +141,48 @@ int GameEngineAI::check1(PlayerBoard* player2Board){
 
 int GameEngineAI::check2(PlayerBoard* player2Board){
     int check=-1;
-    if(player2Board->checkMosaic(0)){
+    if(player2Board->checkMosaic(0) && player2Board->checkFreeSpace(0)>0){
         check=0;
     }
-    else if(player2Board->checkMosaic(1)){
+    else if(player2Board->checkMosaic(1) && player2Board->checkFreeSpace(1)>0){
         check=1;
     }
-    else if(player2Board->checkMosaic(2)){
+    else if(player2Board->checkMosaic(2) && player2Board->checkFreeSpace(2)>0){
         check=2;
     }
-    else if(player2Board->checkMosaic(3)){
+    else if(player2Board->checkMosaic(3) && player2Board->checkFreeSpace(3)>0){
         check=3;
     }
-    else if(player2Board->checkMosaic(4)){
+    else if(player2Board->checkMosaic(4) && player2Board->checkFreeSpace(4)>0){
         check=4;
+    }
+    return check;
+}
+
+int GameEngineAI::check3(PlayerBoard* player2Board, int playerLine){
+    int check=-1;
+    if(player2Board->checkFreeSpace(playerLine)>0){
+        check=player2Board->checkFreeSpace(playerLine);
     }
     return check;
 }
 
 void GameEngineAI::calculateMove(GameBoard* gameBoard, PlayerBoard* player2Board, Player* player2){
     bool counter=false;
-    do{
-
+    
+        //Fills up incomplete lines first
         if(check1(player2Board)>-1){
-            std::cout<< "check  1" <<std::endl;
+            std::cout<< "check 1" <<std::endl;
             if(counter==false){
+                //Insert into line with chosen player line (check1)
                 if(insertLine(gameBoard, player2Board, check1(player2Board), player2)){                
                     counter=true;                
                 }
             }
         }
-        if(check2(player2Board)>-1){
-            if(counter==false){
-                std::cout<< "check  2" <<std::endl;
-                if(insertLine(gameBoard, player2Board, check2(player2Board), player2)){
-                    counter=true;
-                }
-            }
-        }
+        //If there're tiles that fit right into a line
         if(counter==false){
-            std::cout<< "check  3" <<std::endl;
+            std::cout<< "check  2" <<std::endl;
             int countstop=0;
             char tiles[5] = {'R', 'L', 'Y', 'B', 'U'};
             //Player lines
@@ -190,8 +192,6 @@ void GameEngineAI::calculateMove(GameBoard* gameBoard, PlayerBoard* player2Board
                     //Tiles
                     for(char tile : tiles){
                         if(countstop==0){
-                                
-                            //std::cout<< "loop PLAYER_LINE:"<< i << " FACTORY: " << j << tile <<std::endl;
 
                             //Checks if tile colour valid for the line
                             if(player2Board->checkLine(i,tile)==true){                                       
@@ -240,21 +240,44 @@ void GameEngineAI::calculateMove(GameBoard* gameBoard, PlayerBoard* player2Board
                 }
             }
         }
-        //If no more criteria is met then random move
-        //else{
+        //Focus on previously completed lines
+        if(check2(player2Board)>-1){
+            if(counter==false){
+                std::cout<< "check  3" <<std::endl;
+                //Insert into line with chosen player line (check2)
+                if(insertLine(gameBoard, player2Board, check2(player2Board), player2)){
+                    counter=true;
+                }
+            }
+        }
+        //Fills up empty lines (if theres any)
         if(counter==false){
             std::cout<< "check  4" <<std::endl;
+            for(int t=0;t<5;t++){
+                //Loop through player lines
+                if(check3(player2Board,t)>0){
+                    if(counter==false){
+                        //Insert into line with chosen player line (t)
+                        if(insertLine(gameBoard, player2Board, t, player2)){                
+                            counter=true;                
+                        }
+                    }
+                }
+            }
+        }
+        //If no more possible move then fill broken tile
+        if(counter==false){
+            std::cout<< "check  5" <<std::endl;
+            //Loop through player lines
             for(int i=0; i<5; i++){
                 if(counter==false){
+                    //Insert into line with chosen player line (i)
                     if(insertLine(gameBoard, player2Board, i, player2)==true){
                         counter=true;
                     }
                 }
             }
         }
-        //}
-
-    }while(counter!=true);
 }
 
 bool GameEngineAI::insertLine(GameBoard* gameBoard, PlayerBoard* player2Board, int playerLine, Player* player2){
