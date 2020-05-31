@@ -23,8 +23,8 @@ void GameEngine::createPlayers(std::string playerName1, std::string playerName2)
 }
 
 void GameEngine::playGame(){
+    gameBoard->generateTileOrder(randomSeed);
     if(!gameLoaded){
-        gameBoard->generateTileOrder(randomSeed);
         gameBoard->fillTileBag(randomSeed);
         gameBoard->insertIntoFactory();
     }
@@ -178,6 +178,7 @@ bool GameEngine::processInput(std::string input, GameBoard* gameBoard, Player* p
                         if(player->getPlayerBoard()->insertIntoLine(line-1, gameBoard->getBoxLid(), tile)==true){
                             check=true;
                             
+                            //HERE
                             gameBoard->takeTile(factory,tile);
 
                             gameBoard->takeFirstMarker();
@@ -195,6 +196,7 @@ bool GameEngine::processInput(std::string input, GameBoard* gameBoard, Player* p
                         if(player->getPlayerBoard()->insertIntoLine(line-1, gameBoard->getBoxLid(), tile)==true){
                             check=true;
 
+                            //HERE
                             gameBoard->takeTile(factory,tile);
                         }
                         else{
@@ -393,6 +395,8 @@ void GameEngine::saveGame(std::string saveName){
     std::ofstream saveFile;
     saveFile.open(saveName + ".txt");
     
+    saveFile << "Multi" << "\n";
+
     saveFile << player1->getName() << "\n" << player2->getName() << "\n" << player1->getScore() << "\n" << player2->getScore() << "\n" << player1Turn << "\n";
 
     for(int i = 0; i <= 5 ; i++){
@@ -428,19 +432,23 @@ void GameEngine::saveGame(std::string saveName){
     std::cout << "Game saved to " << saveName << ".txt\n";
 }
 
-bool GameEngine::loadGame(){
-    std::string saveName = {};
-    std::cout << "Please enter the name of your save game (not including .txt): \n";
-    std::cin.ignore(100000, '\n');
-    std::getline(std::cin, saveName);
+bool GameEngine::loadGame(std::string saveName){
+
+    // std::string saveName = {};
+    // std::cout << "Please enter the name of your save game (not including .txt): \n";
+    // std::cin.ignore(100000, '\n');
+    // std::getline(std::cin, saveName);
     std::ifstream saveFile(saveName + ".txt");
 
-    if(!saveFile){
-        std::cout << "Save file does not exist. Returning to main menu.\n";
-        return false;
-    }
+    // if(!saveFile){
+    //     std::cout << "Save file does not exist. Returning to main menu.\n";
+    //     return false;
+    // }
 
-    std::string parseInput = {};
+    std::string parseInput = {}; 
+
+    //Skips the first line
+    std::getline(saveFile, parseInput, '\n');
 
     std::getline(saveFile, parseInput, '\n');
     if(!player1->loadPlayerName(parseInput)){ return false; }

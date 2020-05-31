@@ -18,6 +18,8 @@ class GameEngineAI: public GameEngine{
 
         virtual void createPlayers(std::string playerName1);
 
+        virtual void saveGame(std::string saveName);
+
         void calculateMove(GameBoard* gameBoard, PlayerBoard* player2Board, Player* player2);
 
         //checks if there're any incomplete lines

@@ -58,8 +58,8 @@ class GameEngine{
     bool loadRandomSeed(std::string loadInput);
 
     //save/load game functionality
-    void saveGame(std::string saveName);
-    bool loadGame();
+    virtual void saveGame(std::string saveName);
+    bool loadGame(std::string saveName);
 
     //checks if game ended
     bool checkEndGame(Player* player1, Player* player2);

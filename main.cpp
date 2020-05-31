@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include <string>
 #include <string.h>
 #include "PlayerBoard.h"
@@ -19,6 +20,7 @@ void printMenu();
 void showCredits();
 void azulGame(GameEngine* engine);
 void singlePlayer(GameEngineAI* engine);
+bool loadGame(GameEngine* engine1, GameEngine* engine2);
 
 
 int main(int argc, char** argv){
@@ -47,10 +49,11 @@ int main(int argc, char** argv){
         }
     }
 
-    GameEngine* engine = new GameEngine(randomSeed);
-    GameEngineAI* engine2 = new GameEngineAI(randomSeed);
-    
-    while (userInput != "4" ){
+    while (userInput != "5" ){
+
+        GameEngine* engine = new GameEngine(randomSeed);
+        GameEngineAI* engine2 = new GameEngineAI(randomSeed);
+
         printMenu();
 
         
@@ -66,9 +69,7 @@ int main(int argc, char** argv){
         }
 
         else if (userInput == "3") {
-            if(engine->loadGame()){
-                engine->playGame();
-            }
+            loadGame(engine, engine2);
 
         } else if (userInput == "4") {
             showCredits();
@@ -86,6 +87,40 @@ int main(int argc, char** argv){
         }
     }
     return EXIT_SUCCESS;
+}
+
+bool loadGame(GameEngine* engine1, GameEngine* engine2){
+    bool retVal = false;
+
+    std::string saveName = {};
+    std::cout << "Please enter the name of your save game (not including .txt): \n";
+    //std::cin.ignore(100000, '\n');
+    std::getline(std::cin, saveName);
+    std::ifstream saveFile(saveName + ".txt");
+
+    if(!saveFile){
+        std::cout << "Save file does not exist. Returning to main menu.\n";
+        retVal=false;
+    }
+
+    std::string parseInput = {}; 
+
+    std::getline(saveFile, parseInput, '\n');
+    
+    std::cout << parseInput << std::endl;
+
+    if(parseInput == "Multi"){
+        engine1->loadGame(saveName);
+        engine1->playGame();
+    }
+    else if(parseInput == "AI"){
+        engine2->loadGame(saveName);
+        engine2->playGame();
+    }
+    else{
+        std::cout << "Invalid save file" << std::endl;
+    }
+    return retVal;
 }
 
 void singlePlayer(GameEngineAI* engine){
@@ -116,7 +151,7 @@ void printMenu(){
     std::cout << 
     "\nMenu \n" <<
     "---- \n" <<
-    "1 " << MENUDOT << " New Game \n" <<
+    "1 " << MENUDOT << " New Game (Multi Player) \n" <<
     "2 " << MENUDOT << " New Game (Single Player) \n" <<
     "3 " << MENUDOT << " Load Game \n" <<
     "4 " << MENUDOT << " Credits (Show student information) \n" <<

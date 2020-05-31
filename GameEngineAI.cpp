@@ -11,8 +11,8 @@ GameEngineAI::~GameEngineAI(){
 }
 
 void GameEngineAI::playGame(){
+    gameBoard->generateTileOrder(randomSeed);
     if(!gameLoaded){
-        gameBoard->generateTileOrder(randomSeed);
         gameBoard->fillTileBag(randomSeed);
         gameBoard->insertIntoFactory();
     }
@@ -366,3 +366,44 @@ void GameEngineAI::createPlayers(std::string playerName1){
     player2 = new Player("[Bot] Jim");
 }
 
+void GameEngineAI::saveGame(std::string saveName){
+    
+    std::ofstream saveFile;
+    saveFile.open(saveName + ".txt");
+    
+    saveFile << "AI" << "\n";
+
+    saveFile << player1->getName() << "\n" << player2->getName() << "\n" << player1->getScore() << "\n" << player2->getScore() << "\n" << player1Turn << "\n";
+
+    for(int i = 0; i <= 5 ; i++){
+        saveFile << gameBoard->factoryOutput(i) << "\n";        
+    }
+
+    PlayerBoard* player1Board = player1->getPlayerBoard();
+    PlayerBoard* player2Board = player2->getPlayerBoard();
+
+    for(int i = 0; i < 5; i++){
+        saveFile << player1Board->playerMosaicString(i) << "\n";
+    }
+    for(int i = 0; i < 5; i++){
+        saveFile << player2Board->playerMosaicString(i) << "\n";
+    }
+
+    for(int i = 0; i < 5; i++){
+        saveFile << player1Board->playerLineString(i) << "\n";
+    }
+    for(int i = 0; i < 5; i++){
+        saveFile << player2Board->playerLineString(i) << "\n";
+    }
+
+    saveFile << player1Board->brokenTileString() << "\n";
+    saveFile << player2Board->brokenTileString() << "\n";
+
+    saveFile << gameBoard->boxLidString() << "\n";
+
+    saveFile << gameBoard->tileBagString() << "\n";
+
+    saveFile << randomSeed;
+
+    std::cout << "Game saved to " << saveName << ".txt\n";
+}
